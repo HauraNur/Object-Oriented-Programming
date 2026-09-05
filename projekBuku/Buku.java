@@ -1,7 +1,7 @@
 public class Buku {
     private String kode;
     private String judul;
-    private String genre;
+    private GenreBuku genre;
 
     public Buku(String kode, String judul, GenreBBuku genre) {
         this.kode = kode;
