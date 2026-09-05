@@ -3,7 +3,7 @@ public class Buku {
     private String judul;
     private GenreBuku genre;
 
-    public Buku(String kode, String judul, GenreBBuku genre) {
+    public Buku(String kode, String judul, GenreBuku genre) {
         this.kode = kode;
         this.judul = judul;
         this.genre = genre;
