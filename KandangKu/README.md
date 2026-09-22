@@ -1,18 +1,14 @@
-## Getting Started
+# project-akhir-versi-01
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Tugas kelompok deadline Senin depan pukul 23.59
 
-## Folder Structure
+Buatlah contoh penerapan kelas abstract dan interface pada konteks objek data yang relevan dengan topik tugas projek kelompok kalian.
 
-The workspace contains two folders by default, where:
+Ketentuan:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+1. Kelas abstract harus memiliki minimal 2 method abstract dan 1 method standard.
+2. Ada minimal dua kelas yang meng-extends kelas abstract yang dibuat pada poin 1. Setiap kelas ini minimal telah memiliki 1 method khusus miliknya sendiri.
+3. Buat dua buah interface dengan masing-masing minimal memiliki 2 method.
+4. Buat masing-masing satu kelas yang mengimplementasikan interface 1 saja, interface 2 saja, dan keduanya.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Jadikan dalam 1 project, beri judul project-akhir-versi-01.
