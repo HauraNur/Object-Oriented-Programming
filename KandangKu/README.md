@@ -28,10 +28,10 @@ Project ini dibuat untuk menerapkan penggunaan **kelas abstract** dan **interfac
 
 Tema yang digunakan adalah data hewan. Hewan yang digunakan dalam project ini adalah:
 
-- Sapi
-- Kambing
-- Domba
-- Kerbau
+* Sapi
+* Kambing
+* Domba
+* Kerbau
 
 Setiap hewan memiliki sifat dan fungsi yang berbeda. Karena itu, project ini digunakan untuk menunjukkan bagaimana kelas abstract dan interface dapat digunakan dalam program.
 
@@ -73,8 +73,8 @@ Method `info()` digunakan untuk menampilkan nama hewan.
 
 Jadi, kelas `Hewan` sudah memenuhi ketentuan pertama karena memiliki:
 
-- 2 method abstract
-- 1 method standard
+* 2 method abstract
+* 1 method standard
 
 ---
 
@@ -82,10 +82,10 @@ Jadi, kelas `Hewan` sudah memenuhi ketentuan pertama karena memiliki:
 
 Ada 4 kelas yang meng-extends `Hewan`, yaitu:
 
-- `Sapi`
-- `Kambing`
-- `Domba`
-- `Kerbau`
+* `Sapi`
+* `Kambing`
+* `Domba`
+* `Kerbau`
 
 ### Sapi
 
@@ -153,8 +153,8 @@ Dengan demikian, ketentuan kedua sudah terpenuhi.
 
 Pada project ini terdapat 2 interface, yaitu:
 
-- `DapatDijual`
-- `DapatDirawat`
+* `DapatDijual`
+* `DapatDirawat`
 
 ### Interface `DapatDijual`
 
@@ -225,4 +225,118 @@ jual()
 
 ---
 
-### Kambing Meng
+### Kambing Menggunakan Interface 2 Saja
+
+Kambing menggunakan `DapatDirawat`.
+
+```java
+public class Kambing extends Hewan implements DapatDirawat
+```
+
+Artinya, Kambing hanya menggunakan interface `DapatDirawat`.
+
+Kambing memiliki method:
+
+```java
+beriMakan()
+periksaKesehatan()
+```
+
+---
+
+### Domba Menggunakan Kedua Interface
+
+Domba menggunakan kedua interface:
+
+```java
+public class Domba extends Hewan implements DapatDijual, DapatDirawat
+```
+
+Artinya, Domba menggunakan `DapatDijual` dan `DapatDirawat` sekaligus.
+
+Karena menggunakan kedua interface tersebut, Domba memiliki method:
+
+```java
+tampilkanHarga()
+jual()
+beriMakan()
+periksaKesehatan()
+```
+
+Dengan demikian, ketentuan keempat sudah terpenuhi karena terdapat:
+
+* Sapi yang menggunakan interface 1 saja
+* Kambing yang menggunakan interface 2 saja
+* Domba yang menggunakan kedua interface
+
+---
+
+## 5. Class `Main`
+
+Class `Main` digunakan untuk menjalankan program.
+
+Di dalam `Main`, dibuat objek dari setiap kelas hewan:
+
+```java
+Sapi sapi = new Sapi("Sapi Limousin");
+Kambing kambing = new Kambing("Kambing Etawa");
+Domba domba = new Domba("Domba Garut");
+Kerbau kerbau = new Kerbau("Kerbau Lokal");
+```
+
+Setelah objek dibuat, method dari setiap objek dipanggil.
+
+Contohnya pada objek Domba:
+
+```java
+domba.info();
+domba.suara();
+domba.bergerak();
+domba.menghasilkanWol();
+domba.tampilkanHarga();
+domba.jual();
+domba.beriMakan();
+domba.periksaKesehatan();
+```
+
+Kode tersebut menjalankan method yang berasal dari:
+
+* kelas abstract `Hewan`
+* kelas `Domba`
+* interface `DapatDijual`
+* interface `DapatDirawat`
+
+---
+
+## 6. Struktur Project
+
+```text
+project-akhir-versi-01/
+│
+├── src/
+│   ├── DapatDijual.java
+│   ├── DapatDirawat.java
+│   ├── Domba.java
+│   ├── Hewan.java
+│   ├── Kambing.java
+│   ├── Kerbau.java
+│   ├── Main.java
+│   └── Sapi.java
+│
+├── bin/
+├── lib/
+├── .vscode/
+└── README.md
+```
+
+---
+
+## 7. Kesimpulan
+
+Project ini menggunakan kelas abstract dan interface dengan tema data hewan.
+
+Kelas `Hewan` digunakan sebagai kelas dasar untuk `Sapi`, `Kambing`, `Domba`, dan `Kerbau`. Kelas tersebut memiliki 2 method abstract dan 1 method standard.
+
+Selain itu, terdapat 2 interface, yaitu `DapatDijual` dan `DapatDirawat`. Sapi menggunakan interface `DapatDijual`, Kambing menggunakan `DapatDirawat`, sedangkan Domba menggunakan kedua interface tersebut.
+
+Dengan penerapan tersebut, semua ketentuan yang diberikan pada tugas sudah diterapkan dalam satu project.
