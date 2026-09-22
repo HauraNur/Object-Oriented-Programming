@@ -1,32 +1,17 @@
-# Superclass pada Aplikasi Penjualan Peternakan Ruminansia
+# Penjelasan Program Inheritance Java
 
-## Pengertian Superclass
+## 1. Superclass
 
-Superclass adalah kelas utama yang menjadi dasar untuk kelas lain. Data atau method yang ada di superclass dapat digunakan oleh kelas yang mewarisinya.
-
-Pada program ini, `Animal` digunakan sebagai superclass. `Animal` berisi bagian umum yang dimiliki oleh hewan, seperti nama hewan dan method untuk menampilkan informasi.
-
-## Struktur Class
-
-```text
-Animal
-├── Sapi
-└── Kambing
-```
-
-`Animal` menjadi superclass, sedangkan `Sapi` dan `Kambing` menjadi subclass.
-
-## Kode Superclass
+Pada program ini, **`Hewan`** merupakan **superclass** atau kelas induk. Superclass digunakan untuk menyimpan atribut dan method yang dapat digunakan oleh kelas turunannya.
 
 ```java
-abstract class Animal {
+class Hewan {
+
     String nama;
 
-    public Animal(String nama) {
+    public Hewan(String nama) {
         this.nama = nama;
     }
-
-    public abstract void suara();
 
     public void info() {
         System.out.println("Nama hewan: " + nama);
@@ -34,103 +19,116 @@ abstract class Animal {
 }
 ```
 
-Pada class `Animal` terdapat variabel `nama` untuk menyimpan nama hewan.
+Pada class `Hewan` terdapat:
 
-Constructor:
+* `String nama` digunakan untuk menyimpan nama hewan.
+* `Hewan(String nama)` merupakan constructor untuk mengisi nama hewan.
+* `info()` digunakan untuk menampilkan nama hewan.
+
+Class `Sapi` dan `Kambing` menggunakan `Hewan` sebagai superclass dengan keyword `extends`.
 
 ```java
-public Animal(String nama) {
-    this.nama = nama;
-}
+class Sapi extends Hewan
 ```
 
-digunakan untuk memberikan nama pada hewan saat objek dibuat.
-
-Method:
-
 ```java
-public void info() {
-    System.out.println("Nama hewan: " + nama);
-}
+class Kambing extends Hewan
 ```
 
-digunakan untuk menampilkan nama hewan.
+Artinya, `Sapi` dan `Kambing` merupakan turunan dari `Hewan`. Kedua class tersebut dapat menggunakan atribut dan method yang ada pada `Hewan`.
 
-Sedangkan:
+---
 
-```java
-public abstract void suara();
-```
-
-merupakan method abstrak. Method ini belum memiliki isi dan nantinya akan dibuat oleh subclass.
-
-## Class Sapi
+## 2. Class Sapi
 
 ```java
-class Sapi extends Animal {
+class Sapi extends Hewan {
 
     public Sapi(String nama) {
         super(nama);
     }
 
-    public void suara() {
-        System.out.println("Sapi: Moo...");
+    public void jenisHewan() {
+        System.out.println("Jenis: Sapi");
     }
 }
 ```
 
-`Sapi` menggunakan `extends Animal`, yang berarti class `Sapi` mewarisi `Animal`.
-
-`super(nama)` digunakan untuk memanggil constructor yang ada pada class `Animal`.
-
-Class `Sapi` juga mengisi method `suara()` dengan suara sapi.
-
-## Class Kambing
+Class `Sapi` memiliki constructor yang menerima nama hewan.
 
 ```java
-class Kambing extends Animal {
+super(nama);
+```
+
+`super()` digunakan untuk memanggil constructor dari superclass, yaitu `Hewan`.
+
+Selain itu, class `Sapi` memiliki method `jenisHewan()` untuk menampilkan jenis hewan sebagai sapi.
+
+---
+
+## 3. Class Kambing
+
+```java
+class Kambing extends Hewan {
 
     public Kambing(String nama) {
         super(nama);
     }
 
-    public void suara() {
-        System.out.println("Kambing: Mbeeek...");
+    public void jenisHewan() {
+        System.out.println("Jenis: Kambing");
     }
 }
 ```
 
-Sama seperti `Sapi`, class `Kambing` juga mewarisi `Animal`.
+Class `Kambing` bekerja dengan cara yang sama seperti `Sapi`. Class ini juga mewarisi `Hewan` dan menggunakan `super(nama)` untuk mengisi nama pada superclass.
 
-Perbedaannya ada pada isi method `suara()`, karena suara kambing berbeda dengan suara sapi.
+Perbedaannya terdapat pada method `jenisHewan()` yang menampilkan `"Jenis: Kambing"`.
 
-## Cara Kerja Program
+---
 
-Contoh penggunaan pada `Main`:
+## 4. Cara Kerja Program
+
+Program dijalankan dari class `Main`.
 
 ```java
-class Main {
+public class Main {
     public static void main(String[] args) {
         Sapi sapi = new Sapi("Sapi Limousin");
         Kambing kambing = new Kambing("Kambing Etawa");
 
         sapi.info();
-        sapi.suara();
+        sapi.jenisHewan();
 
         kambing.info();
-        kambing.suara();
+        kambing.jenisHewan();
     }
 }
 ```
 
-Saat program dijalankan, objek `sapi` dan `kambing` dibuat terlebih dahulu.
+Urutan kerja program adalah sebagai berikut:
 
-Setelah itu, method `info()` dipanggil. Method tersebut berasal dari superclass `Animal`, tetapi dapat digunakan oleh `Sapi` dan `Kambing` karena keduanya mewarisi `Animal`.
+1. Program membuat objek `sapi` dari class `Sapi` dengan nama **Sapi Limousin**.
+2. Constructor `Sapi` memanggil `super(nama)` untuk mengirim nama tersebut ke constructor `Hewan`.
+3. Nama `"Sapi Limousin"` disimpan pada atribut `nama` milik `Hewan`.
+4. `sapi.info()` dipanggil untuk menampilkan nama hewan.
+5. `sapi.jenisHewan()` dipanggil untuk menampilkan jenis hewan.
+6. Selanjutnya program membuat objek `kambing` dari class `Kambing` dengan nama **Kambing Etawa**.
+7. Constructor `Kambing` juga memanggil `super(nama)` untuk mengisi nama pada `Hewan`.
+8. `kambing.info()` menampilkan nama kambing.
+9. `kambing.jenisHewan()` menampilkan jenis kambing.
 
-Method `suara()` memiliki isi yang berbeda pada setiap subclass. `Sapi` menampilkan suara sapi, sedangkan `Kambing` menampilkan suara kambing.
+## 5. Hasil Output
 
-## Kesimpulan
+```text
+Nama hewan: Sapi Limousin
+Jenis: Sapi
+Nama hewan: Kambing Etawa
+Jenis: Kambing
+```
 
-Superclass digunakan agar bagian yang sama pada beberapa class tidak perlu ditulis berulang kali. Pada program ini, `Animal` menjadi dasar untuk `Sapi` dan `Kambing`.
+## 6. Kesimpulan
 
-Konsep ini dapat digunakan pada aplikasi penjualan peternakan ruminansia karena ada beberapa jenis hewan yang memiliki data umum, tetapi juga memiliki ciri masing-masing.
+Program ini menerapkan konsep **inheritance (pewarisan)** dalam Java. `Hewan` berperan sebagai superclass, sedangkan `Sapi` dan `Kambing` sebagai subclass.
+
+Dengan inheritance, `Sapi` dan `Kambing` tidak perlu membuat ulang atribut `nama` dan method `info()` karena sudah diwariskan dari `Hewan`. Setiap subclass kemudian dapat memiliki method sendiri, seperti `jenisHewan()` untuk menunjukkan jenis hewan masing-masing.
