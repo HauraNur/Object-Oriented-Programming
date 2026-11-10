@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #fff1f5;
+            padding: 40px 20px;
+            color: #65394c;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: #d85c8a;
+            font-weight: 800;
+        }
+
+        .calculator-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(216, 92, 138, 0.12);
+            border: 2px solid #ffe0eb;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #f8d3e0;
+            border-radius: 14px;
+            background: #fff8fb;
+            color: #65394c;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #e78bad;
+            box-shadow: 0 0 0 3px #ffe5ef;
+        }
+
+        select {
+            max-width: 85px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.97);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: #e978a1;
+            color: white;
+            border-radius: 14px;
+            font-size: 17px;
+            box-shadow: 0 5px 12px rgba(216, 92, 138, 0.2);
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #c0395a;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .history-card {
+            margin-top: 25px;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(216, 92, 138, 0.10);
+            border: 2px solid #ffe0eb;
+        }
+
+        .history-card h2 {
+            color: #d85c8a;
+            margin-bottom: 18px;
+            font-size: 21px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th {
+            background: #ffe6ef;
+            color: #b94e78;
+            padding: 13px;
+            text-align: center;
+        }
+
+        th:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        th:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        td {
+            padding: 13px;
+            text-align: center;
+            border-bottom: 1px solid #fce6ee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 9px;
+            margin: 2px;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #e9a0bd;
+        }
+
+        .delete-btn {
+            background: #d96b83;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #bd91a3;
+        }
+
+        @media (max-width: 550px) {
+            body {
+                padding: 25px 12px;
+            }
+
+            .calculator-card, .history-card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .input-group {
+                gap: 8px;
+            }
+
+            input, select {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>CALCULATOR</h1>
+    </div>
+
+    <div class="calculator-card">
+
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+
+        <form id="formOperasi">
+            <div class="input-group">
+                <input type="number" id="bil1" placeholder="Angka pertama" required>
+
+                <select id="opt" required>
+                    <option value="+">+</option>
+                    <option value="-">−</option>
+                    <option value="x">×</option>
+                    <option value="/">÷</option>
+                </select>
+
+                <input type="number" id="bil2" placeholder="Angka kedua" required>
+            </div>
+
+            <button type="submit" class="calculate-btn">= Hitung</button>
+        </form>
+    </div>
+
+    <div class="history-card">
+        <h2>Riwayat Perhitungan</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Perhitungan</th>
+                        <th>Hasil</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelRiwayat">
+                    <tr th:each="op, status : ${listOperasi}">
+                        <td th:text="${status.count}"></td>
+                        <td>
+                            <span th:text="${op.bil1}"></span>
+                            <span th:text="${op.opt}"></span>
+                            <span th:text="${op.bil2}"></span>
+                        </td>
+                        <td th:text="${op.result}"></td>
+                        <td>
+                            <button class="action-btn edit-btn"
+                                type="button"
+                                th:onclick="'editOperasi(' + ${op.idOperasi} + ')'">
+                                Edit
+                            </button>
+
+                            <button class="action-btn delete-btn"
+                                type="button"
+                                th:onclick="'hapusOperasi(' + ${op.idOperasi} + ')'">
+                                Hapus
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(listOperasi)}">
+                        <td colspan="4" class="empty">
+                            Belum ada riwayat perhitungan.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const form = document.getElementById("formOperasi");
+    const inputBil1 = document.getElementById("bil1");
+    const inputOpt = document.getElementById("opt");
+    const inputBil2 = document.getElementById("bil2");
+    const tabel = document.getElementById("tabelRiwayat");
+
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const bil1 = inputBil1.value;
+        const opt = inputOpt.value;
+        const bil2 = inputBil2.value;
+
+        if (bil1 === "" || bil2 === "") return;
+
+        if (opt === "/" && Number(bil2) === 0) {
+            alert("Angka tidak bisa dibagi dengan nol!");
+            return;
+        }
+
+        const tombol = form.querySelector("button");
+        tombol.disabled = true;
+        tombol.textContent = "Menghitung...";
+
+        try {
+            const response = await fetch("/operasi/simpan", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bil1: Number(bil1),
+                    opt: opt,
+                    bil2: Number(bil2)
+                })
+            });
+
+            const hasil = await response.json();
+
+            if (!response.ok || !hasil.success) {
+                alert(hasil.error || "Perhitungan gagal disimpan.");
+                return;
+            }
+
+            const barisKosong = tabel.querySelector(".empty");
+            if (barisKosong) {
+                barisKosong.closest("tr").remove();
+            }
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td></td>
+                <td>${hasil.bil1} ${hasil.opt} ${hasil.bil2}</td>
+                <td>${hasil.result ?? "-"}</td>
+                <td>
+                    <button class="action-btn edit-btn" type="button"
+                        onclick="editOperasi(${hasil.id})">Edit</button>
+                    <button class="action-btn delete-btn" type="button"
+                        onclick="hapusOperasi(${hasil.id})">Hapus</button>
+                </td>
+            `;
+
+            tabel.prepend(row);
+
+            // Pertahankan angka setelah perhitungan
+            inputBil1.value = bil1;
+            inputOpt.value = opt;
+            inputBil2.value = bil2;
+
+            // Perbarui nomor urut riwayat
+            Array.from(tabel.querySelectorAll("tr")).forEach((tr, index) => {
+                tr.cells[0].textContent = index + 1;
+            });
+
+        } catch (error) {
+            alert("Terjadi kesalahan saat menghubungi server.");
+            console.error(error);
+        } finally {
+            tombol.disabled = false;
+            tombol.textContent = "= Hitung";
+        }
+    });
+
+    async function hapusOperasi(id) {
+        if (!confirm("Yakin ingin menghapus perhitungan ini?")) return;
+
+        try {
+            const response = await fetch("/operasi/hapus/" + id, {
+                method: "POST"
+            });
+
+            const hasil = await response.json();
+
+            if (hasil.success) {
+                location.reload();
+            } else {
+                alert("Gagal menghapus data.");
+            }
+        } catch (error) {
+            alert("Terjadi kesalahan saat menghapus data.");
+        }
+    }
+
+    function editOperasi(id) {
+        window.location.href = "/operasi/edit/" + id;
+    }
+</script>
+</body>
+</html>
